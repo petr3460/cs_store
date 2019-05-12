@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% block title %}
+  {% endblock %}
+  <style>
+  @font-face {
+  	font-family: Zefani;  
+	  src: url(static/shop_app/zefani.otf);  
+	  font-weight: normal;  
+}
+.site-title {
+  font-family: "Zefany";
+  font-size: 22px;
+  color: #063006;
+  font-weight: 700;
+}
+.site-title-container {
+  background: #fff;
+  border-radius: 10px;
+}
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+</head>
+
+<body>
+  <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+    <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+    <div class="title-bar-title">Menu</div>
+  </div>
+
+  <div class="top-bar" id="responsive-menu">
+    <div class="top-bar-left">
+      <ul class="dropdown menu" data-dropdown-menu>
+        <li class="site-title-container"><a class="site-title" href="/">CS_Store</a></li>
+        <li class="has-submenu">
+          <a href="#0">Жанры</a>
+          <ul class="submenu menu vertical" data-submenu>
+            {% for tag in tags %}
+            <li><a href="{% url 'products_by_tag' tag=tag.slug %}">{{ tag.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <!-- <li><a href="#0">Two</a></li> -->
+
+
+
+      </ul>
+    </div>
+    <form method="GET" action="/">
+    <div class="top-bar-right">
+      <ul class="menu">
+          <li>
+              {% if user.is_authenticated %}
+              <a href="{% url 'settings' %}">Вы вошли как <strong>{{ user.get_full_name }}</strong></a>
+              {% else %}
+              <a href="{% url 'login' %}">Войти</a>
+              {% endif %}
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'logout' %}">Выйти</a>
+            </li>
+            {% endif %}
+            
+            
+              <li><input type="search" name="q" value="{{ request.GET.q }}" placeholder="Search"></li>
+              <li><button type="submit" class="button">Поиск</button></li>
+            
+            
+      </ul>
+    </div>
+  </form>
+  </div>
+
+  {% block content %}
+  {% endblock %}
+
+  <div class="row column">
+    <hr>
+    <ul class="menu">
+      <li>CS_Store</li>
+      <li><a href="#">На главную</a></li>
+      <li><a href="#">О сайте</a></li>
+      <li><a href="#">Контакты</a></li>
+      <li class="float-right">Copyright Petr Galko 2019</li>
+    </ul>
+  </div>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+{% block javascript %}
+{% endblock %}
+</html>

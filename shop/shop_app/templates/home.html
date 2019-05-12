@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Главная страница</title>
+{% endblock %}
+
+{% block content %}
+<div class="row column text-center">
+    <h3>{{ header }}</h3>
+    <hr>
+</div>
+
+<div class="row small-up-2 large-up-4">
+    {% for product in products %}
+<div class="column">
+    <a href="{% url 'product' product_slug=product.slug %}">
+        <img class="thumbnail" src="{{ product.image.url }}">
+    </a>
+    <h5>{{ product.name }}</h5>
+    <p>{{ product.price }}</p>
+    <a href="{{ product.url }}" class="button expanded">Купить</a>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

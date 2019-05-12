@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+Настройки
+{% endblock %}
+
+
+{% block content %}
+	<h3>Ваш профиль</h3>
+
+		{% if twitter_login %}
+			<p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">@{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
+		{% elif vk_login %}
+			<p>Connected as <a href="https://vk.com/id{{ vk_login.extra_data.id }}" target="_blank">{{ vk_login.extra_data.id }}</a></p>
+		{% endif %}
+	<img src="{{ user.userprofile.avatar }}">
+	<p>{{ user.get_full_name }}</p>
+
+
+
+{% endblock %}

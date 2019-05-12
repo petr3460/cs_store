@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>{{ product.name }}</title>
+{% endblock %}
+
+
+{% block content %}
+<br>
+<article class="grid-container">
+	<div class="row">
+		<div class="medium-4 large-3 columns">
+			<img class="thumbnail" src="{{ product.image.url }}">
+		</div>
+		<div class="medium-7 large-7 columns">
+			<h3>{{ product.name }}</h3>
+			<p>Автор: {{ product.author.name }}</p>
+			<p>{{ product.description }}</p>
+			<h4>{{ product.price }}₽</h4>
+			<a href="{{ product.url }}" class="button large expanded">Купить</a>
+		</div>
+	</div>
+	<div class="column row">
+		<hr>
+		<ul class="tabs" data-tabs id="example-tabs">
+			<li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Отзывы</a></li>
+			<li class="tabs-title"><a href="#panel2">Похожие товары</a></li>
+		</ul>
+		<div class="tabs-content" data-tabs-content="example-tabs">
+			<div class="tabs-panel is-active" id="panel1">
+				<h4>Отзывы</h4>
+				<div id="review-list">
+					{% for review in reviews %}
+					<div class="media-object stack-for-small">
+						<div class="media-object-section">
+							<img class="thumbnail" src="{{ review.author.userprofile.avatar }}">
+						</div>
+						<div class="media-object-section">
+							<h5>{{ review.author.get_full_name }}</h5>
+							<p>{{ review.text }}</p>
+							<p>{{ review.date }}</p>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+
+				{% if user.is_authenticated %}
+				<p>Написать отзыв</p>
+				<form action="" id="review-form" method="POST" name="{{ product.id }}">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<button class="button" type="submit">Отправить</button>
+				</form>
+				{% else %}
+				<h6>
+					<p>Только авторизованные пользователи могут оставлять отзывы</p>
+				</h6>
+				{% endif %}
+			</div>
+			<div class="tabs-panel" id="panel2">
+				<div class="row medium-up-3 large-up-5">
+					{% for product in other_products %}
+					<div class="column">
+						<img class="thumbnail" src="{{ product.image.url }}">
+						<h5>{{ product.name }}<small>{{ product.price}}</small></h5>
+						<a href="{{ product.url }}" class="button hollow tiny expanded">Купить</a>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</article>
+{% endblock %}
+
+
+
+{% block javascript %}
+<script>
+    $('#review-form').submit(function(e){
+        var msg = $(this).serialize();
+        var id = $(this).attr('name');
+        $.ajax({
+                    type: "POST",
+                    url: "{% url 'review' %}",
+                    data: msg + "&id=" + id,
+                    id: $(this).attr('name'),
+                    dataType: "json",
+                    success: function(response) {
+                        // var avatar = $('#avatar').text();
+                        var comment = (
+						'<div class="media-object stack-for-small">' +
+							'<div class="media-object-section">' +
+								'<img class="thumbnail" src="https://placehold.it/100x100">' +
+							'</div>' +
+							'<div class="media-object-section">' +
+								'<h5>' + response.user + '</h5>' +
+								'<p>' + response.review + '</p>' +
+								'<p>только что</p>' +
+							'</div>' +
+						'</div>');
+                        $('#review-list').append(comment);                            
+                    },
+                }); 
+        e.preventDefault();
+    })
+</script>
+{% endblock %}
