@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -78,19 +80,21 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-        'default': {
-        'ENGINE': "django.db.backends.postgresql_psycopg2",
-        'NAME': "shop",
-        'USER': "django_shop",
-        'PASSWORD': "Qazxsw122",
-        'HOST': "localhost",
-        'PORT': "5432",
-        'TEST': {
-            'NAME': 'testdatabase',
-        },
-    },
-}
+# DATABASES = {
+#         'default': {
+#         'ENGINE': "django.db.backends.postgresql_psycopg2",
+#         'NAME': "shop",
+#         'USER': "django_shop",
+#         'PASSWORD': "Qazxsw122",
+#         'HOST': "localhost",
+#         'PORT': "5432",
+#         'TEST': {
+#             'NAME': 'testdatabase',
+#         },
+#     },
+# }
+
+DATABASES['default'] =  dj_database_url.config()
 
 
 # Password validation
