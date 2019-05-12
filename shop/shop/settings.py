@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 #         },
 #     },
 # }
-
+DATABASES = {}
 DATABASES['default'] =  dj_database_url.config()
 
 
