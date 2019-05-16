@@ -31,7 +31,7 @@ def home(request, tag=None):
             ).distinct()
         header = 'поиск "{}"'.format(query)
     elif not query and not tag:
-        products = products[:5]
+        products = products[:4]
     tags = Tag.objects.all()
     context = {
         'header': header,
