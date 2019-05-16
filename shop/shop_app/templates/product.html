@@ -67,7 +67,7 @@
 				<div class="row medium-up-3 large-up-5">
 					{% for product in other_products %}
 					<div class="column">
-						<img class="thumbnail" src="{{ product.image.url }}">
+						<img class="thumbnail" src="{{ product.image }}">
 						<h5>{{ product.name }}<small>{{ product.price}}</small></h5>
 						<a href="{{ product.url }}" class="button hollow tiny expanded">Купить</a>
 					</div>

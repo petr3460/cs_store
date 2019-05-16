@@ -86,9 +86,7 @@ def password(request):
 def product(request, product_slug):
     tags = Tag.objects.all()
     product = get_object_or_404(Product, slug=product_slug)
-    # import pdb
-    # pdb.set_trace()
-    other_products = Product.objects.filter(tags__in=product.tags.all())
+    other_products = Product.objects.filter(tags__in=product.tags.all()).distinct('id')
     reviews = Review.objects.filter(product=product)
     form = ReviewForm()
     
