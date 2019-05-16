@@ -38,9 +38,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Product(models.Model):
     name = models.CharField(max_length=256)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ManyToManyField(Author)
     price = models.IntegerField()
     description = models.TextField(blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='тег')
