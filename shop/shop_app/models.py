@@ -11,7 +11,7 @@ class UserProfile(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='brand/', blank=True)
+    image = models.URLField()
 
     def __str__(self):
         return self.name
@@ -45,7 +45,7 @@ class Product(models.Model):
     price = models.IntegerField()
     description = models.TextField(blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='тег')
-    image = models.ImageField(upload_to='product/', blank=True)
+    image = models.URLField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     url = models.URLField()
     slug = models.SlugField()

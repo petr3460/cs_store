@@ -15,7 +15,7 @@
     {% for product in products %}
 <div class="column">
     <a href="{% url 'product' product_slug=product.slug %}">
-        <img class="thumbnail" src="{{ product.image.url }}">
+        <img class="thumbnail" src="{{ product.image }}">
     </a>
     <h5>{{ product.name }}</h5>
     <p>{{ product.price }}</p>
