@@ -14,7 +14,13 @@
 		</div>
 		<div class="medium-7 large-7 columns">
 			<h3>{{ product.name }}</h3>
-			<p>Автор: {{ product.author.name }}</p>
+			<p>Автор: {% for author in product.author.all %}
+				{% if forloop.counter == 1 %}
+				{{ author.name }}  
+				{% else %}
+				, {{ author.name }}  
+				{% endif %}
+				{% endfor %}</p>
 			<p>{{ product.description }}</p>
 			<h4>{{ product.price }}₽</h4>
 			<a href="{{ product.url }}" class="button large expanded">Купить</a>
